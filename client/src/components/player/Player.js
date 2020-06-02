@@ -16,10 +16,15 @@ class Player extends Component {
 		fetchVideoByIdHandler: PropTypes.func.isRequired
 	}
 
+	state = {
+		currentTime: 0
+	}
+
 	constructor(props) {
 		super(props);
 
 		this.fetchVideo = this.fetchVideo.bind(this);
+		this.handlePlayerProgress = this.handlePlayerProgress.bind(this);
 	}
 
 	componentDidMount() {
@@ -45,13 +50,21 @@ class Player extends Component {
 		}
 	}
 
+	handlePlayerProgress({ playedSeconds }) {
+		this.setState({ currentTime: playedSeconds });
+	}
+
 	render() {
 		const { 
 						props: {
 							className,
 							url,
 							tags
-						}
+						},
+						state: {
+							currentTime
+						},
+						handlePlayerProgress
 					} = this;
 
 		return (
@@ -59,11 +72,15 @@ class Player extends Component {
 				{url
 					?
 						<div>
-							<ReactPlayer className="player__player" url={url} controls={true} />
+							<ReactPlayer
+								className="player__player"
+								url={url}
+								controls={true}
+								onProgress={handlePlayerProgress} />
 							<div className="player__tags">
 								{tags
 									?
-										<PlayerTags tags={tags} />
+										<PlayerTags tags={tags} currentTime={currentTime} />
 									:
 										<div>This video has no tags</div>
 								}
