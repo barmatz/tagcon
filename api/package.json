@@ -7,9 +7,9 @@
   "scripts": {
     "start": "node .",
     "lint": "npx eslint .",
-    "container": "npm-run-all container:build container:start",
+    "container": "run-s container:build container:start",
     "container:start": "docker run -p 3000:3000 tagcon-api-container",
-    "container:build": "npm-run-all lint && docker build . -t tagcon-api-container"
+    "container:build": "run-s lint && docker build . -t tagcon-api-container"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

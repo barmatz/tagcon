@@ -1,4 +1,5 @@
 .dockerignore
 build
+mock-api
 node_modules
 Dockerfile

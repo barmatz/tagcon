@@ -1,0 +1,19 @@
+{
+	"id": 2,
+	"url": "https://www.youtube.com/watch?v=wln1dGUfEGI",
+	"tags": [{
+		"id": 1,
+		"label": "first tag",
+		"timestamp": {
+			"start": 0,
+			"end": 60
+		}
+	}, {
+		"id": 2,
+		"label": "second tag",
+		"timestamp": {
+			"start": 30,
+			"end": 60
+		}
+	}]
+}
