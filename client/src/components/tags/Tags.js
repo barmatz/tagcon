@@ -13,7 +13,7 @@ function Tags({ tags, currentTime }) {
 					?	
 						<div>
 							Current Tags:			
-							<ul className="player__tags__list player__tags__list--current">
+							<ul className="tags__list tags__list--current">
 								{tags
 									.filter(({ timestamp: { start, end }}) => currentTime >= start && currentTime < end)
 									.map(({ label, timestamp: { start, end }}, index) => (
@@ -21,7 +21,7 @@ function Tags({ tags, currentTime }) {
 									))}
 							</ul>
 							All Tags:
-							<ul className="player__tags__list">
+							<ul className="tags__list">
 								{tags
 									.map(({ label, timestamp: { start, end }}, index) => (
 										<li className="player__tags__list__item" key={`tag${index}`}>{label} ({secondsToTimestamp(start)}/{secondsToTimestamp(end)})</li>
