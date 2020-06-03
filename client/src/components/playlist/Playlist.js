@@ -1,51 +1,44 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Player from 'components/player';
+import classnames from 'classnames';
+import { playlistItemSelected } from 'actions/playlist';
+import { Container } from 'components/layout';
 import './Playlist.scss';
 
-class Playlist extends Component {
-	static propTypes = {
-		items: PropTypes.arrayOf(PropTypes.shape({
-			id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired
-		}))
-	}
-
-	static getDerivedStateFromProps({ items }, state) {
-		return { ...state, currentItem: items && items[0] };
-	}
-
-	state = {
-		currentItem: null
-	}
-
-	render() {
-		const {
-						props: {
-							items
-						},
-						state: {
-							currentItem
-						}
-					} = this;
-
-		return (
-			<div className="playlist">
-				<div>Current videos in playlist: {items ? items.length : 0}</div>
-				<div className="playlist__current-item">
-					{currentItem
-						?
-							<div>
-								<div>Current item {currentItem.id}</div>
-								<Player className="playlist__player" id={currentItem.id} />
-							</div>
-						:
-							<div>Current item not available</div>
-					}
-				</div>
-			</div>
-		);
-	}
+function Playlist({ items, selectedItem, onItemSelected }) {
+	return (
+		<div className="playlist">
+			<Container>
+				<div>Playlist ({items ? items.length : 0})</div>
+				<ul className="playlist__list">{items && items.map((item, index) => (
+					<li
+						className={classnames('playlist__list__item', { 'playlist__list__item--selected': item.id === (selectedItem && selectedItem.id)})}
+						key={`item${index}`}>
+							<button onClick={() => onItemSelected(item)}>Item #{item.id}</button>
+						</li>
+				))}</ul>
+			</Container>
+		</div>
+	);
 }
 
-
-export default Playlist;
+Playlist.propTypes = {
+	items: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired
+	})),
+	selectedItem: PropTypes.shape({
+		id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]).isRequired
+	}),
+	onItemSelected: PropTypes.func.isRequired
+}
+	
+export default connect(
+	({ playlist: { items, selectedItem }}) => ({
+		items,
+		selectedItem
+	}),
+	dispatch => ({
+		onItemSelected: item => dispatch(playlistItemSelected(item))
+	})
+)(Playlist);

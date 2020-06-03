@@ -5,15 +5,15 @@
 		"id": 1,
 		"label": "first tag",
 		"timestamp": {
-			"start": 0,
-			"end": 60
+			"start": 100,
+			"end": 453
 		}
 	}, {
 		"id": 2,
 		"label": "second tag",
 		"timestamp": {
-			"start": 30,
-			"end": 60
+			"start": 1000,
+			"end": 2348
 		}
 	}]
 }

@@ -1,2 +1,17 @@
 .app {
+	&__title {
+	}
+
+	.errors {
+	}
+
+	.playlist,
+	.tags {
+		flex: 1 1 20%;
+	}
+
+	.player {
+		flex: 2;
+		margin: 2rem auto;
+	}
 }

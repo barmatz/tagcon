@@ -1,14 +1,13 @@
-import { FETCH_VIDEO_BY_ID_SUCCESS } from 'actions/player';
+import { PLAYER_PROGRESS } from 'actions/player';
 
 const initialState = {
-	id: null,
-	url: null
+	currentTime: null
 };
 
-export default (state = initialState, { type, video }) => {
+export default (state = initialState, { type, currentTime }) => {
 	switch (type) {
-		case FETCH_VIDEO_BY_ID_SUCCESS:
-			return { ...state, ...video }
+		case PLAYER_PROGRESS:
+			return { ...state, currentTime };
 		default:
 			return state;
 	}

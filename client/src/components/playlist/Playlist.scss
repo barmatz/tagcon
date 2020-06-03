@@ -1,2 +1,30 @@
 .playlist {
+	&__list {
+		margin-top: 1rem;
+
+		&__item {
+			margin-bottom: 1rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			button {
+				cursor: pointer;
+			}
+
+			&--selected {
+				button {
+					cursor: pointer;
+					font-weight: bold;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	ul.playlist__list {
+		list-style: none;
+		padding: 0;
+	}
 }
