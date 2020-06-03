@@ -2,16 +2,25 @@
   &__list {
     margin-bottom: 1rem;
     display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    opacity: 0.8;
+    transition: opacity 0.5s;
 
     &:last-child {
       margin-bottom: 0;
     }
 		
     &--current {
+      opacity: 1;
     }
 
     &__item {
-      margin: 0.2rem;
+      border: 1px solid #fff;
+
+      &.tag--person {
+        max-width: 50%;
+      }
     }
   }	
 

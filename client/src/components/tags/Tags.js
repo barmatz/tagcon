@@ -13,32 +13,27 @@ function Tags({ tags, currentTime }) {
 					?	
 						<div>
 							Current Tags:			
-							<ul className="tags__list tags__list--current">
+							<div className="tags__list tags__list--current">
 								{tags
 									.filter(({ timestamp: { start, end }}) => currentTime >= start && currentTime < end)
-									.map(({ label, timestamp: { start, end }}, index) => (
-										<li className="tags__list__item" key={`current-tag${index}`}>
-											<Tag
-												label={label}
-												start={start}
-												end={end} />
-										</li>
+									.map((tag, index) => (
+										<Tag
+											key={`current-tag${index}`}
+											className="tags__list__item"
+											{...tag} />
 									))}
-							</ul>
+							</div>
 							All Tags:
-							<ul className="tags__list">
+							<div className="tags__list">
 								{tags
-									.map(({ label, timestamp: { start, end }}, index) => (
-										<li className="tags__list__item" key={`tag${index}`}>
-											<Tag
-												displayTimestamp={true}
-												labelMaxLength={5}
-												label={label}
-												start={start}
-												end={end} />
-										</li>
+									.map((tag, index) => (
+										<Tag
+											key={`tag${index}`}
+											className="tags__list__item"
+											{...tag}
+											displayTimestamp={true} />
 									))}
-							</ul>
+							</div>
 						</div>
 					:
 						<div>This video has no tags</div>

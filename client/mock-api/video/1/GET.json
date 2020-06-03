@@ -3,17 +3,35 @@
 	"url": "https://www.youtube.com/watch?v=90ZpotXDf8M",
 	"tags": [{
 		"id": 1,
-		"label": "first tag",
+		"label": "text tag",
 		"timestamp": {
 			"start": 0,
 			"end": 60
 		}
 	}, {
 		"id": 2,
-		"label": "second tag",
+		"type": "person",
+		"label": "Or Daniel Barmatz",
+		"image": "https://media-exp1.licdn.com/dms/image/C4E03AQEBHqo50-cSSg/profile-displayphoto-shrink_400_400/0?e=1596672000&v=beta&t=7D7pGnTUes-Q9Md4AKnjyNIvsPizJsoYnCZ87w2mU7M",
+		"links": [{
+			"type": "twitter",
+			"url": "https://twitter.com/barmatz"
+		}, {
+			"type": "linkedin",
+			"url": "https://www.linkedin.com/in/barmatz/"
+		}],
 		"timestamp": {
 			"start": 30,
 			"end": 60
+		}
+	}, {
+		"id": 3,
+		"type": "topic",
+		"label": "Topic tag",
+		"description": "This is a Topic tag, it can have a long description added to it to detail a specific topic",
+		"timestamp": {
+			"start": 20,
+			"end": 1000
 		}
 	}]
 }
