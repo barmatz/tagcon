@@ -1,5 +1,9 @@
 extends: stylelint-config-sass-guidelines
 rules:
   block-no-empty:
-  - true
-  - severity: warning
+    - true
+    - severity: warning
+  indentation:
+    - 2
+    - severity: warning
+  max-nesting-depth: null

@@ -1,17 +1,17 @@
 .app {
-	&__title {
-	}
+  &__title {
+  }
 
-	.errors {
-	}
+  .errors {
+  }
 
-	.playlist,
-	.tags {
-		flex: 1 1 20%;
-	}
+  .playlist,
+  .tags {
+    flex: 1 1 20%;
+  }
 
-	.player {
-		flex: 2;
-		margin: 2rem auto;
-	}
+  .player {
+    flex: 2;
+    margin: 2rem auto;
+  }
 }

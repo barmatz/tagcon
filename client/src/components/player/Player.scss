@@ -1,13 +1,13 @@
 .player {
-	background: #000;
-	color: #fff;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-	&--no-video {
-		width: 10rem;
-		height: 10rem;
-	}
+  &--no-video {
+    height: 10rem;
+    width: 10rem;
+  }
 }
