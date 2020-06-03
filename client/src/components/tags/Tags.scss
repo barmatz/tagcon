@@ -1,6 +1,7 @@
 .tags {
   &__list {
     margin-bottom: 1rem;
+    display: flex;
 
     &:last-child {
       margin-bottom: 0;
@@ -10,6 +11,14 @@
     }
 
     &__item {
+      margin: 0.2rem;
     }
   }	
+
+  ul {
+    &.tags__list {
+      list-style: none;
+      padding: 0;
+    }
+  }
 }

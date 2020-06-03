@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container } from 'components/layout';
-import { secondsToTimestamp } from 'utils/format';
+import Tag from './Tag';
 import './Tags.scss';
 
 function Tags({ tags, currentTime }) {
@@ -17,14 +17,26 @@ function Tags({ tags, currentTime }) {
 								{tags
 									.filter(({ timestamp: { start, end }}) => currentTime >= start && currentTime < end)
 									.map(({ label, timestamp: { start, end }}, index) => (
-										<li className="player__tags__list__item" key={`current-tag${index}`}>{label} ({secondsToTimestamp(start)}/{secondsToTimestamp(end)})</li>
+										<li className="tags__list__item" key={`current-tag${index}`}>
+											<Tag
+												label={label}
+												start={start}
+												end={end} />
+										</li>
 									))}
 							</ul>
 							All Tags:
 							<ul className="tags__list">
 								{tags
 									.map(({ label, timestamp: { start, end }}, index) => (
-										<li className="player__tags__list__item" key={`tag${index}`}>{label} ({secondsToTimestamp(start)}/{secondsToTimestamp(end)})</li>
+										<li className="tags__list__item" key={`tag${index}`}>
+											<Tag
+												displayTimestamp={true}
+												labelMaxLength={5}
+												label={label}
+												start={start}
+												end={end} />
+										</li>
 									))}
 							</ul>
 						</div>
