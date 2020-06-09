@@ -3,7 +3,7 @@ import { Container, Row } from 'components/layout';
 import Errors from 'components/errors';
 import Playlist from 'components/playlist';
 import Player from 'components/player';
-import Tags from 'components/tags';
+import Tags, { TagEditor } from 'components/tags';
 import './App.scss';
 
 function App() {
@@ -11,8 +11,9 @@ function App() {
     <div className="app">
       <Container className="app__title">
         <h1>TagCon</h1>
+        <Errors />
+        <TagEditor />
       </Container>
-      <Errors />
       <Row>
         <Playlist />
         <Player />

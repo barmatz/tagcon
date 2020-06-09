@@ -1,0 +1,21 @@
+.form {
+  &__field--timestamp {
+    display: flex;
+    
+    &__button {
+      height: fit-content;
+    }
+
+    .form {
+      &__field {
+        margin-bottom: 0;
+        
+        input {
+          cursor: default;
+          text-align: center;
+          width: 5rem;
+        }
+      }
+    }
+  }
+}

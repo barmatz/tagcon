@@ -11,7 +11,7 @@ function Tags({ tags, currentTime }) {
 			<Container>
 				{tags
 					?	
-						<div>
+						<>
 							Current Tags:			
 							<div className="tags__list tags__list--current">
 								{tags
@@ -34,9 +34,9 @@ function Tags({ tags, currentTime }) {
 											displayTimestamp={true} />
 									))}
 							</div>
-						</div>
+						</>
 					:
-						<div>This video has no tags</div>
+						<>This video has no tags</>
 				}
 			</Container>
 		</div>

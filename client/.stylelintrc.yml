@@ -7,3 +7,6 @@ rules:
     - 2
     - severity: warning
   max-nesting-depth: null
+  selector-no-qualifying-type:
+    - true
+    - severity: warning

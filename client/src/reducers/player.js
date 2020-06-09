@@ -1,4 +1,4 @@
-import { PLAYER_PROGRESS } from 'actions/player';
+import { PLAYER_SEEK } from 'actions/player';
 
 const initialState = {
 	currentTime: null
@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, { type, currentTime }) => {
 	switch (type) {
-		case PLAYER_PROGRESS:
+		case PLAYER_SEEK:
 			return { ...state, currentTime };
 		default:
 			return state;

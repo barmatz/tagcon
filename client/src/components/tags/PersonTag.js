@@ -11,7 +11,7 @@ function PersonTag({ className, label, timestamp, displayTimestamp, image, links
 			timestamp={timestamp}
 			displayTimestamp={displayTimestamp}>
 			<img className="tag--person__image" src={image} alt={label} />
-			<p>
+			<div>
 				{label}
 				{links &&
 					<ul className="tag--person__links">
@@ -22,7 +22,7 @@ function PersonTag({ className, label, timestamp, displayTimestamp, image, links
 						))}	
 					</ul>
 				}
-			</p>
+			</div>
 		</BaseTag>
 	);
 }

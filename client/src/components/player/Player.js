@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import ReactPlayer from 'react-player';
-import { playerProgress } from 'actions/player';
+import { playerSeek } from 'actions/player';
 import './Player.scss';
 
-function Player({ url, onProgress }) {
+function Player({ url, lockPlayback, onProgress, onSeek }) {
 	return (
 		<div className={classnames('player', { 'player--no-video': !url })}>
 			{url
@@ -14,26 +14,31 @@ function Player({ url, onProgress }) {
 					<ReactPlayer
 						url={url}
 						controls={true}
-						onProgress={onProgress} />
+						playing={typeof lockPlayback !== 'undefined' ? !lockPlayback : undefined}
+						onProgress={onProgress}
+						onSeek={onSeek} />
 				:
-					<div>No video</div>
+					<>No video</>
 			}
 		</div>
 	);
 }
 
 Player.propTypes = {
-	id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
 	url: PropTypes.string,
-	onProgress: PropTypes.func.isRequired
+	lockPlayback: PropTypes.bool,
+	onProgress: PropTypes.func.isRequired,
+	onSeek: PropTypes.func
 }
 
 export default connect(
-	({ video: { id, url }}) => ({
+	({ video: { id, url }, player: { lockPlayback }}) => ({
 		id,
-		url
+		url,
+		lockPlayback
 	}),
 	dispatch => ({
-		onProgress: ({ playedSeconds }) => dispatch(playerProgress(playedSeconds))
+		onProgress: ({ playedSeconds }) => dispatch(playerSeek(playedSeconds)),
+		onSeek: ({ seconds }) => dispatch(playerSeek(seconds))
 	})
 )(Player);

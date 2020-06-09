@@ -1,3 +1,3 @@
-export const PLAYER_PROGRESS = 'PLAYER_PROGRESS';
+export const PLAYER_SEEK = 'PLAYER_SEEK';
 
-export const playerProgress = currentTime => ({ type: PLAYER_PROGRESS, currentTime });
+export const playerSeek = currentTime => ({ type: PLAYER_SEEK, currentTime });

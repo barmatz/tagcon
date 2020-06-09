@@ -1,12 +1,12 @@
 import { all, takeLatest, put } from 'redux-saga/effects';
-import { PLAYLIST_RECEIVED, playlistItemSelected } from 'actions/playlist';
+import { UPDATE_PLAYLIST, playlistItemSelected } from 'actions/playlist';
 
-function* handlePlaylistRecevied({ playlist: { items } }) {
+function* handleUpdatePlaylist({ playlist: { items } }) {
 	yield put(playlistItemSelected(items[0]));
 }
 
 function* watchReceviedPlaylist() {
-	yield takeLatest(PLAYLIST_RECEIVED, handlePlaylistRecevied);
+	yield takeLatest(UPDATE_PLAYLIST, handleUpdatePlaylist);
 }
 
 export default function* playlistSaga() {

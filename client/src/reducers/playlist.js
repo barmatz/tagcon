@@ -1,4 +1,4 @@
-import { PLAYLIST_RECEIVED, PLAYLIST_ITEM_SELECTED } from 'actions/playlist';
+import { UPDATE_PLAYLIST, PLAYLIST_ITEM_SELECTED } from 'actions/playlist';
 
 const initialState = {
 	id: null,
@@ -8,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, { type, playlist, selectedItem }) => {
 	switch (type) {
-		case PLAYLIST_RECEIVED:
+		case UPDATE_PLAYLIST:
 			return { ...state, ...playlist }
 		case PLAYLIST_ITEM_SELECTED:
 			return { ...state, selectedItem }

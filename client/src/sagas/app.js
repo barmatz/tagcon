@@ -1,15 +1,24 @@
 import { all, takeLatest, put } from 'redux-saga/effects';
 import { apiError } from 'actions/api';
 import { APP_INIT } from 'actions/app';
-import { playlistReceived } from 'actions/playlist';
-import { fetchPlaylist } from 'utils/net';
+import { updatePlaylist } from 'actions/playlist';
+import { updateTagTypes } from 'actions/tags';
+import { fetchPlaylist, fetchTagTypes } from 'utils/net';
 
 function* handleInitApp() {
 	try {
 		const playlist = yield fetchPlaylist();
 
-		yield put(playlistReceived(playlist));
+		yield put(updatePlaylist(playlist));
 	} catch(err) {
+		yield put(apiError(err));
+	}
+
+	try {
+		const tagTypes = yield fetchTagTypes();
+
+		yield put(updateTagTypes(tagTypes));
+	} catch (err) {
 		yield put(apiError(err));
 	}
 }

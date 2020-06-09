@@ -1,0 +1,13 @@
+[{
+	"id": 1,
+	"type": "text",
+	"label": "Text"
+}, {
+	"id": 1,
+	"type": "person",
+	"label": "Person"
+}, {
+	"id": 1,
+	"type": "topic",
+	"label": "Topic"
+}]

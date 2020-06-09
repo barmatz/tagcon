@@ -1,6 +1,6 @@
-export const PLAYLIST_RECEIVED = 'PLAYLIST_RECEIVED';
+export const UPDATE_PLAYLIST = 'UPDATE_PLAYLIST';
 
-export const playlistReceived = playlist => ({ type: PLAYLIST_RECEIVED, playlist })
+export const updatePlaylist = playlist => ({ type: UPDATE_PLAYLIST, playlist })
 
 export const PLAYLIST_ITEM_SELECTED = 'PLAYLIST_ITEM_SELECTED';
 
