@@ -52,10 +52,11 @@ function renderTextAreaField({ className, placeholder, value, readOnly, onChange
 			className={className}
 			name={name}
 			placeholder={placeholder}
+			value={value}
 			readOnly={readOnly || !onChange}
 			onChange={onChange}
 			onFocus={onFocus}
-			onBlur={onBlur}>{value}</textarea>
+			onBlur={onBlur} />
 	);
 }
 

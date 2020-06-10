@@ -7,9 +7,14 @@ import { resolveUrl } from 'utils/format';
 function PersonTagFields({ tag, onChange, ...props }) {
 	const { imageUrl } = tag
 			, links = tag.links || []
-			,	handleChange = (fieldName, formatter) => {
-					return ({ target: { value }}) => onChange && onChange({ ...tag, [fieldName]: formatter ? formatter(value) : value });
-				};
+			,	handleChange = (fieldName, formatter) => (
+					({ target: { value }}) => {
+						console.log({ fieldName, value, tag });
+						return (
+							onChange && onChange({ ...tag, [fieldName]: formatter ? formatter(value) : value })
+						)
+					}
+				);
 
 	return (
 		<>
@@ -20,13 +25,13 @@ function PersonTagFields({ tag, onChange, ...props }) {
 					label="Image URL"
 					value={imageUrl}
 					onChange={handleChange('imageUrl')} />
-					<img src={imageUrl} alt="tag-image-url-preview" />
+				<img src={imageUrl} alt="tag-image-url-preview" />
 			</div>
 			<div>
 				<List
 					name="tag-link"
 					label="Add link"
-					value={links}
+					items={links}
 					onChange={handleChange('links', links => links.map(url => ({ url })))}>
 					{(url, index) => (
 						<div key={`tag-list-item${index}`}>

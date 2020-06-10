@@ -1,112 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { saveTag } from 'actions/tags';
 import Form from 'components/form';
+import { TEXT_TAG, PERSON_TAG, TOPIC_TAG } from './Tag';
 import TextTagFields from './TextTagFields';
 import TopicTagFields from './TopicTagFields';
 import PersonTagFields from './PersonTagFields';
 import './TagEditor.scss';
 
-const TAG_TYPE_TOPIC = 'topic'
-		, TAG_TYPE_PERSON = 'person'
-		, TAG_TYPE_TEXT = 'text';
+const getInitTag = () => ({});
 
-function getInitTag() {
-	return {};
-}
+const getTagPrintableName = tag => (
+	tag ? (tag.label || 'Unnamed tag') : 'Unknown tag'
+);
 
-function getTagPrintableName(tag) {
-	return tag ? (tag.label || 'Unnamed tag') : 'Unknown tag';
-}
+export const TagEditor = ({ tagTypes, currentTime, currentTag, savingTag, tagSaved, onSaveTag }) => {
+	const [ openEditor, setOpenEditor ] = useState(false)
+			, [ tag, setTag ] = useState(getInitTag());
 
-class TagEditor extends Component {
-	static propTypes = {
-		tagTypes: PropTypes.array,
-		playerCurrentTime: PropTypes.number,
-		currentTag: PropTypes.object,
-		savingTag: PropTypes.bool,
-		tagSaved: PropTypes.bool,
-		onSaveTag: PropTypes.func.isRequired
+	function resetForm() {
+		setTag(getInitTag());
 	}
 
-	state = {
-		openEditor: false,
-		tag: getInitTag()
+	function handleFormChange(tag) {
+		console.log({ tag });
+		setTag({ ...tag });
 	}
 
-	constructor(props) {
-		super(props);
-
-		this.resetForm = this.resetForm.bind(this);
-		this.handleOpenEditorClick = this.handleOpenEditorClick.bind(this);
-		this.handleDeleteTagClick = this.handleDeleteTagClick.bind(this);
-		this.handleSaveTagClick = this.handleSaveTagClick.bind(this);
-		this.handleFormChange = this.handleFormChange.bind(this);
-		this.renderFields = this.renderFields.bind(this);
-	}
-
-	static getDerivedStateFromProps({ tagTypes }, state) {
-		const nextState = { ...state };
-		
-		if (tagTypes && state.tagType === null) {
-			nextState.tagType = tagTypes[0].value;
-		}
-
-		return nextState;
-	}
-
-	resetForm() {
-		this.setState({
-			tag: getInitTag()
-		});
-	}
-
-	handleOpenEditorClick() {
-		this.setState({ openEditor: true });
-	}
-
-	handleDeleteTagClick() {
-		this.resetForm();
-		this.setState({ openEditor: false });
-	}
-
-	handleSaveTagClick() {
-		this.props.onSaveTag(this.state.tag);
-	}
-
-	handleFormChange(tag) {
-		this.setState({ tag });
-	}
-
-	renderFields() {
-		const {
-					props: {
-						tagTypes,
-						playerCurrentTime
-					},
-					state: {
-						tag
-					},
-					handleFormChange
-				} = this
+	function renderFields() {
+		const { type } = tag
 				, fieldProps = {
-					tagTypes: [ ...(tagTypes || []) ],
-					currentTime: playerCurrentTime,
-					tag,
-					onChange: handleFormChange
-				};
+						tagTypes: [ ...(tagTypes || []) ],
+						currentTime,
+						tag,
+						onChange: handleFormChange
+					};
 
-		switch (tag.type) {
-			case TAG_TYPE_TOPIC:
+		switch (type) {
+			case TOPIC_TAG:
 				return (
 					<TopicTagFields {...fieldProps} />
 				);
-			case TAG_TYPE_PERSON:
+			case PERSON_TAG:
 				return (
 					<PersonTagFields {...fieldProps} />
 				);
-			case TAG_TYPE_TEXT:
+			case TEXT_TAG:
 			default:
 				return (
 					<TextTagFields {...fieldProps} />
@@ -114,53 +54,61 @@ class TagEditor extends Component {
 		}
 	}
 
-	render() {
-		const {
-						props: {
-							savingTag,
-							tagSaved,
-							currentTag
-						},
-						state: {
-							openEditor
-						},
-						handleOpenEditorClick,
-						handleDeleteTagClick,
-						handleSaveTagClick,
-						renderFields
-					} = this;
-
-		return (
-			<div className="tag-editor">
-				<div className="tag-editor__actions">
-					{!openEditor &&
-						<button onClick={handleOpenEditorClick} disabled={savingTag}>Create Tag</button>
-					}
-					{openEditor &&
-						<>
-							<button onClick={handleDeleteTagClick} disabled={savingTag}>Delete Tag</button>
-							<button onClick={handleSaveTagClick} disabled={savingTag}>Save Tag</button>
-						</>
-					}
-					{savingTag &&
-						<div>Saving tag {getTagPrintableName(currentTag)}...</div>
-					}
-					{tagSaved &&
-						<div>Tag {getTagPrintableName(currentTag)} saved!</div>
-					}
-				</div>
+	return (
+		<div className="tag-editor">
+			<div className="tag-editor__actions">
+				{!openEditor &&
+					<button
+						disabled={savingTag}
+						onClick={() => setOpenEditor(true)}>
+						Create Tag
+					</button>
+				}
 				{openEditor &&
-					<Form disabled={savingTag}>{renderFields()}</Form>
+					<>
+						<button
+							disabled={savingTag}
+							onClick={() => (resetForm(), setOpenEditor(false))}>
+							Delete Tag
+						</button>
+						<button
+							disabled={savingTag}
+							onClick={() => onSaveTag(tag)}>
+							Save Tag
+						</button>
+					</>
+				}
+				{savingTag &&
+					<div>Saving tag {getTagPrintableName(currentTag)}...</div>
+				}
+				{tagSaved &&
+					<div>Tag {getTagPrintableName(currentTag)} saved!</div>
 				}
 			</div>
-		);
-	}
-}
+			{openEditor &&
+				<Form disabled={savingTag} disableSubmitButton={true}>
+					{renderFields()}
+				</Form>
+			}
+		</div>
+	);
+};
+
+TagEditor.propTypes = {
+	tagTypes: PropTypes.arrayOf(PropTypes.shape({
+		value: PropTypes.any 
+	})),
+	currentTime: PropTypes.number,
+	currentTag: PropTypes.object,
+	savingTag: PropTypes.bool,
+	tagSaved: PropTypes.bool,
+	onSaveTag: PropTypes.func.isRequired
+};
 
 export default connect(
 	({ tagEditor: { tagTypes, currentTag, savingTag, tagSaved }, player: { currentTime }}) => ({
 		tagTypes,
-		playerCurrentTime: currentTime,
+		currentTime,
 		currentTag,
 		savingTag,
 		tagSaved

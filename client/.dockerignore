@@ -1,5 +1,7 @@
 .dockerignore
+.storybook
 build
 mock-api
 node_modules
+storybook-static
 Dockerfile

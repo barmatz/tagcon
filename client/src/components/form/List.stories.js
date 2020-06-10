@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import List from './List';
 
 export default {
 	component: List,
-	title: 'List',
-	decorators: [ withKnobs ]
+	title: 'components/form/List'
 };
 
 export const basic = () => {

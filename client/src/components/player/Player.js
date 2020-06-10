@@ -6,23 +6,21 @@ import ReactPlayer from 'react-player';
 import { playerSeek } from 'actions/player';
 import './Player.scss';
 
-function Player({ url, lockPlayback, onProgress, onSeek }) {
-	return (
-		<div className={classnames('player', { 'player--no-video': !url })}>
-			{url
-				?
-					<ReactPlayer
-						url={url}
-						controls={true}
-						playing={typeof lockPlayback !== 'undefined' ? !lockPlayback : undefined}
-						onProgress={onProgress}
-						onSeek={onSeek} />
-				:
-					<>No video</>
-			}
-		</div>
-	);
-}
+export const Player = ({ url, lockPlayback, onProgress, onSeek }) => (
+	<div className={classnames('player', { 'player--no-video': !url })}>
+		{url
+			?
+				<ReactPlayer
+					url={url}
+					controls={true}
+					playing={typeof lockPlayback !== 'undefined' ? !lockPlayback : undefined}
+					onProgress={onProgress}
+					onSeek={onSeek} />
+			:
+				<>No video</>
+		}
+	</div>
+);
 
 Player.propTypes = {
 	url: PropTypes.string,

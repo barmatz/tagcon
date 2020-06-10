@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormField from './FormField';
 
 function List({ name, label, items, children, onChange }) {
-	const [ itemList, setItemList ] = useState([])
+	const [ itemList, setItemList ] = useState([ ...items ] || [])
 			, [ newItem, setNewItem ] = useState('');
 
 	function updateItemList(itemList) {
 		setItemList(itemList);
-		onChange && onChange({ target: { value: itemList }});
+		onChange && onChange({ target: { value: [ ...itemList ]}});
 	}
-
-	useEffect(() => {
-		setItemList(items);
-	});
 
   return (
 		<div>
@@ -32,7 +28,7 @@ function List({ name, label, items, children, onChange }) {
 				onChange={({ target: { value }}) => setNewItem(value)} />
 				{itemList.map((item, index) => (
 					<div key={`list-item${index}`}>
-						{children ? children(item) : <div>{item}</div>}
+						{children ? children(item, index) : item}
 						<button onClick={() => updateItemList(itemList.filter(otherItem => otherItem !== item))}>Remove</button>
 					</div>
 				))}

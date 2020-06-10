@@ -1,0 +1,23 @@
+.sb-show-main {
+	.tag {
+		background: inherit;
+    border-radius: inherit;
+    cursor: inherit;
+    font-size: inherit;
+    height: inherit;
+    height: inherit;
+    padding: inherit;
+    position: inherit;
+	}
+
+	.info-table {
+		border-spacing: inherit;
+		border-collapse: collapse;
+
+		& th,
+		& td {
+			border: 1px solid;
+			padding: 0.5rem;
+		}
+	}
+}

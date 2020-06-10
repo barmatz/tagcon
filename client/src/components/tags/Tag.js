@@ -6,9 +6,9 @@ import PersonTag from './PersonTag';
 import TopicTag from './TopicTag';
 import './Tag.scss';
 
-const TEXT_TAG = 'text'
-		, PERSON_TAG = 'person'
-		, TOPIC_TAG = 'topic';
+export const TEXT_TAG = 'text'
+					, PERSON_TAG = 'person'
+					, TOPIC_TAG = 'topic';
 
 function Tag(props) {
 	const { label, timestamp: { start, end }} = props
