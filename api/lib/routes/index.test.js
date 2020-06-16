@@ -14,6 +14,6 @@ describe('Route /', () => {
 		const { statusCode, body: { data: { message }}} = await req(server).get('/');
 		
 		expect(statusCode).toBe(200);
-		expect(message).toBe('TagCon API');
+		expect(message).toEqual('TagCon API');
 	});
 });

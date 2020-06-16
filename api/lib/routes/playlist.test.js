@@ -1,4 +1,5 @@
 import req from 'supertest';
+
 import server, { connect, disconnect } from '../server';
 
 describe('Route /playlist', () => {
@@ -25,4 +26,13 @@ describe('Route /playlist', () => {
 			expect(typeof item.id).toBe('number');
 		}
 	});
+
+	test('It should return a playlist by ID', async () => {
+		const playlistId = 2
+				, { statusCode, body: { data: { id }}} = await req(server).get(`/playlist/${playlistId}`);
+
+		expect(statusCode).toBe(200);
+		expect(id).toBeDefined();
+		expect(id).toEqual(playlistId);
+	})
 });

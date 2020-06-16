@@ -18,6 +18,7 @@ export default express.Router()
       resData.data = data;
       res.status(200);
     } else {
+      resData.data = {};
       res.status(404);
     }
 

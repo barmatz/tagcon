@@ -4,7 +4,7 @@ services:
       build: 
         context: .
         dockerfile: Dockerfile.test
-      command: yarn test --watchAll=false
+      command: yarn test --watchAll --runInBand
       volumes:
         - .:/api
       ports:
