@@ -38,7 +38,10 @@ server
         , bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
 
     debugLog(`Listening on ${bind}`);
-    console.log(`Listening on ${bind}`);
+
+    if (process.env.NODE_ENV !== 'test') {
+      console.log(`Listening on ${bind}`);
+    }
   });
 
 export const connect = async () => await server.listen(port);

@@ -6,10 +6,22 @@ import cors from 'cors';
 import logger from 'morgan';
 import indexRouter from './routes/index.js';
 
+function getLogger() {
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return logger('common');
+    case 'test':
+      return (req, res, next) => next();
+      break;
+    default:
+      return logger('dev');
+  }
+}
+
 export default express()
   .set('views', join('.', 'views'))
   .set('view engine', 'jade')
-  .use(logger('dev'))
+  .use(getLogger())
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use(cookieParser())
