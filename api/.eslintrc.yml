@@ -1,6 +1,7 @@
 env:
   browser: true
   es6: true
+  jest: true
 extends:
   - airbnb-base
 globals:
@@ -16,6 +17,9 @@ rules:
   comma-style:
     - error
     - first
+    - exceptions:
+        ArrayExpression: true
+        ObjectExpression: true
   one-var:
     - error
     - consecutive
@@ -37,3 +41,22 @@ rules:
     - ignorePackages: true
   import/prefer-default-export:
     - warn
+  linebreak-style: off
+  no-tabs: off
+  object-curly-spacing:
+    - error
+    - always
+    - objectsInObjects: false
+  array-bracket-spacing:
+    - error
+    - always
+    - objectsInArrays: false
+      arraysInArrays: false
+  max-len: off
+  object-curly-newline:
+    - error
+    - ImportDeclaration: never
+  no-mixed-spaces-and-tabs: warn
+  one-var-declaration-per-line:
+    - error
+    - initializations

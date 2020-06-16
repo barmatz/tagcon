@@ -1,0 +1,13 @@
+database:
+  name: tagcon
+  url: mongodb://db:27017
+
+test:
+  database:
+    name: tagcon_test
+    url: mongodb://db:27017
+
+production:
+    database:
+      name: tagcon
+      url: mongodb://db:27017

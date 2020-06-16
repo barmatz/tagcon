@@ -11,18 +11,20 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "container": "run-s container:build container:start",
-    "container:build": "run-s lint && docker build . -t tagcon-api-container",
+    "container:build": "docker build . -t tagcon-api-container",
     "container:start": "docker run -p 3000:3000 tagcon-api-container",
     "container:dev": "docker-compose up --build",
     "container:test": "docker-compose -f docker-compose.test.yml up --build"
   },
   "dependencies": {
+    "config-yml": "^0.10.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "mongodb": "^3.5.9",
     "morgan": "~1.9.1"
   },
   "devDependencies": {

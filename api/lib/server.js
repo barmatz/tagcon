@@ -44,8 +44,8 @@ server
     }
   });
 
-export const connect = async () => await server.listen(port);
+export const connect = () => server.listen(port);
 
-export const disconnect = async () => await server.close();
+export const disconnect = () => server.close();
 
 export default server;
