@@ -10,7 +10,6 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port);
 server
   .on('error', error => {
     if (error.syscall !== 'listen') {
@@ -41,3 +40,9 @@ server
     debugLog(`Listening on ${bind}`);
     console.log(`Listening on ${bind}`);
   });
+
+export const connect = async () => await server.listen(port);
+
+export const disconnect = async () => await server.close();
+
+export default server;

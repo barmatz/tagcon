@@ -6,10 +6,15 @@
   "main": "lib/server.js",
   "scripts": {
     "start": "node .",
-    "lint": "npx eslint .",
+    "start:watch": "nodemon .",
+    "lint": "eslint .",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "container": "run-s container:build container:start",
+    "container:build": "run-s lint && docker build . -t tagcon-api-container",
     "container:start": "docker run -p 3000:3000 tagcon-api-container",
-    "container:build": "run-s lint && docker build . -t tagcon-api-container"
+    "container:dev": "docker-compose up --build",
+    "container:test": "docker-compose -f docker-compose.test.yml up --build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -21,10 +26,18 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^26.0.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.4",
     "npm-run-all": "^4.1.5",
+    "superagent": "^5.2.2",
+    "supertest": "^4.0.2",
     "webpack": "^4.43.0"
   }
 }
