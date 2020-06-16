@@ -1,11 +1,33 @@
 version: '3'
 services:
   api:
-      build: 
-        context: .
-        dockerfile: Dockerfile.test
-      command: yarn test --watchAll --runInBand
-      volumes:
-        - .:/api
-      ports:
-        - 3000:3000
+    build: 
+      context: .
+      dockerfile: Dockerfile.test
+    command: yarn test --watchAll --runInBand
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/api
+    depends_on:
+      - db
+    networks:
+      - tagcontestnetwork
+
+  db:
+    image: mongo
+    restart: "no"
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --noauth
+    networks:
+      - tagcontestnetwork
+
+networks:
+  tagcontestnetwork:
+      driver: bridge
+
+volumes:
+  mongodata:

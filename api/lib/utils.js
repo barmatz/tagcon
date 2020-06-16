@@ -1,4 +1,4 @@
-function normalizePort(val) {
+export const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) { return val; }
@@ -6,8 +6,8 @@ function normalizePort(val) {
   if (port >= 0) { return port; }
 
   return false;
-}
+};
 
-export {
+export default {
   normalizePort
 };

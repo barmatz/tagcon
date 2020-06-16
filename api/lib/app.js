@@ -12,7 +12,6 @@ function getLogger() {
       return logger('common');
     case 'test':
       return (req, res, next) => next();
-      break;
     default:
       return logger('dev');
   }
