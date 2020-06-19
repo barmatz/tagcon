@@ -1,19 +1,21 @@
 import req from 'supertest';
-import server, { connect, disconnect } from './server.js';
+import { connect, disconnect } from './server.js';
 
 describe('Server', () => {
+  let server;
+
   beforeEach(async () => {
-    await connect();
+    server = await connect();
   });
 
   afterEach(async () => {
     await disconnect();
+    server = null;
   });
 
-  test('It should connect', async () => {
-    const { statusCode, text } = await req(server).get('/ping');
-
-    expect(statusCode).toBe(200);
-    expect(text).toBe('pong');
-  });
+  test('It should connect', async () => (
+    req(server)
+      .get('/ping')
+      .expect(200, 'pong')
+  ));
 });

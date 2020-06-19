@@ -1,19 +1,26 @@
 import req from 'supertest';
-import server, { connect, disconnect } from '../server.js';
+import { connect, disconnect } from '../server.js';
 
 describe('Route /', () => {
+  let server;
+
   beforeEach(async () => {
-    await connect();
+    server = await connect();
   });
 
   afterEach(async () => {
     await disconnect();
+    server = null;
   });
 
-  test('It should response the GET method', async () => {
-    const { statusCode, body: { data: { message }}} = await req(server).get('/');
-
-    expect(statusCode).toBe(200);
-    expect(message).toEqual('TagCon API');
-  });
+  test('It should response the GET method', async () => (
+    req(server)
+      .get('/')
+      .expect('Content-Type', /json/)
+      .expect(200, {
+        data: {
+          message: 'TagCon API'
+        }
+      })
+  ));
 });

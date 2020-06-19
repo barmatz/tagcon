@@ -1,35 +1,45 @@
 import express from 'express';
-
-const mockData = {
-  1: {
-    id: 1
-    , items: [{
-      id: 1
-    }, {
-      id: 2
-    }]
-  }
-  , 2: {
-    id: 2
-    , items: [{
-      id: 1
-    }, {
-      id: 2
-    }]
-  }
-};
+import Playlist from '../db/models/playlist.js';
 
 export default express.Router()
-  .use((req, res, next) => {
-    next();
-  })
-  .get('/', (req, res, next) => {
-    const [ data ] = Object.values(mockData);
+  .get('/', async (req, res, next) => {
+    const playlists = await Playlist.find({});
 
-    res.data = data;
+    res.data = playlists.map(playlist => playlist.toClient());
     next();
   })
-  .get('/:id', ({ params: { id }}, res, next) => {
-    res.data = mockData[id];
+  .post('/', async ({ body }, res, next) => {
+    const playlist = await Playlist.create(body);
+
+    res.data = playlist.toClient();
+    next();
+  })
+  .get('/:id', async ({ params: { id }}, res, next) => {
+    const playlist = await Playlist.findById(id);
+
+    if (playlist) {
+      res.data = playlist.toClient();
+    }
+
+    next();
+  })
+  .put('/:id', async ({ body, params: { id }}, res, next) => {
+    const playlist = await Playlist.findById(id);
+
+    Object.keys(body).forEach(key => {
+      playlist[key] = body[key];
+    });
+
+    const updatedPlaylist = await playlist.save();
+
+    res.data = updatedPlaylist.toClient();
+
+    next();
+  })
+  .delete('/:id', async ({ params: { id }}, res, next) => {
+    const { deletedCount } = await Playlist.remove({ _id: id });
+
+    res.data = deletedCount;
+
     next();
   });

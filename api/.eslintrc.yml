@@ -41,6 +41,8 @@ rules:
     - ignorePackages: true
   import/prefer-default-export:
     - warn
+  import/no-named-as-default-member:
+    - warn
   linebreak-style: off
   no-tabs: off
   object-curly-spacing:

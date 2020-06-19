@@ -3,12 +3,26 @@ import http from 'http';
 import app from './app.js';
 import { normalizePort } from './utils.js';
 
-const debugLog = debug('api:server')
-    , port = normalizePort(process.env.PORT || '3000');
+const { NODE_ENV, PORT } = process.env
+    , debugLog = debug('api:server')
+    , port = normalizePort(PORT || '3000');
 
 app.set('port', port);
 
 const server = http.createServer(app);
+
+function isTestEnv() {
+  return NODE_ENV === 'test';
+}
+
+function handleServerError(err) {
+  if (isTestEnv()) {
+    throw err;
+  } else {
+    console.error(err);
+    process.exit(1);
+  }
+}
 
 server
   .on('error', error => {
@@ -22,12 +36,10 @@ server
 
     switch (error.code) {
       case 'EACCES':
-        console.error(`${bind} requires elevated privileges`);
-        process.exit(1);
+        handleServerError(`${bind} requires elevated privileges`);
         break;
       case 'EADDRINUSE':
-        console.error(`${bind} is already in use`);
-        process.exit(1);
+        handleServerError(`${bind} is already in use`);
         break;
       default:
         throw error;
@@ -39,7 +51,7 @@ server
 
     debugLog(`Listening on ${bind}`);
 
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTestEnv()) {
       console.log(`Listening on ${bind}`);
     }
   });
@@ -47,5 +59,3 @@ server
 export const connect = () => server.listen(port);
 
 export const disconnect = () => server.close();
-
-export default server;
