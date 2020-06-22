@@ -1,8 +1,10 @@
 import express from 'express';
 import playlist from './playlist.js';
+import video from './video.js';
 
 export default express.Router()
   .use('/playlist', playlist)
+  .use('/video', video)
   .get('/', (req, res, next) => {
     res.data = { message: 'TagCon API' };
     next();

@@ -1,11 +1,12 @@
-import { Schema, model } from 'mongoose';
+import { Schema, ObjectId, model } from 'mongoose';
 import { toClient } from './utils.js';
+import Video from './Video.js';
 
 const schema = Schema({
   name: String,
   items: [{
-    name: String,
-    url: String
+    type: ObjectId,
+    ref: Video.modelName
   }]
 });
 

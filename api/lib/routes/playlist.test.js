@@ -1,7 +1,7 @@
 import req from 'supertest';
 import { connect, disconnect } from '../server.js';
 import db from '../db/index.js';
-import Playlist from '../db/models/playlist.js';
+import Playlist from '../db/models/Playlist.js';
 
 const samplePlaylists = [{
   name: 'ANON Summit Playlist',
@@ -28,13 +28,13 @@ let server;
 function sendAndExpectReq(method, uri, options) {
   const { payload, expectedStatus } = options || {};
 
-  let promise = req(server)[method.toLowerCase()](uri);
+  let deferred = req(server)[method.toLowerCase()](uri);
 
   if (payload) {
-    promise = promise.send(payload);
+    deferred = deferred.send(payload);
   }
 
-  return promise
+  return deferred
     .expect(expectedStatus || 200)
     .expect('Content-Type', /json/);
 }
@@ -100,7 +100,13 @@ describe('Route /playlist', () => {
 
     await createAndExpectSamplePlaylist(samplePlaylists[1]);
     await expectSamplePlaylistById(playlist.id)
-      .expect({ data: playlist });
+      .expect(({ body: { data: { items }}}) => {
+        items.forEach(({ id, name, url }, index) => {
+          expect(id).toBeDefined();
+          expect(name).toEqual(playlist.items[index].name);
+          expect(url).toEqual(playlist.items[index].url);
+        });
+      });
   });
 
   test('It should update a playlist', async () => {
