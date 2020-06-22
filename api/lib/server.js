@@ -52,7 +52,7 @@ server
     debugLog(`Listening on ${bind}`);
 
     if (!isTestEnv()) {
-      console.log(`Listening on ${bind}`);
+      console.log(`API server listening on ${bind}`);
     }
   });
 

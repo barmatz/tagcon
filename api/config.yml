@@ -1,5 +1,5 @@
 database:
-  name: tagcon
+  name: tagcon_dev
   url: mongodb://db:27017
 
 test:

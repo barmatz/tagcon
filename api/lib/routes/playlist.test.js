@@ -1,7 +1,7 @@
-import req from 'supertest';
 import { connect, disconnect } from '../server.js';
 import db from '../db/index.js';
-import Playlist from '../db/models/playlist.js';
+import Playlist from '../db/models/Playlist.js';
+import { sendAndExpectReq } from '../../tests/utils.js';
 
 const samplePlaylists = [{
   name: 'ANON Summit Playlist',
@@ -23,24 +23,10 @@ const samplePlaylists = [{
   }]
 }];
 
-let server;
-
-function sendAndExpectReq(method, uri, options) {
-  const { payload, expectedStatus } = options || {};
-
-  let promise = req(server)[method.toLowerCase()](uri);
-
-  if (payload) {
-    promise = promise.send(payload);
-  }
-
-  return promise
-    .expect(expectedStatus || 200)
-    .expect('Content-Type', /json/);
-}
+let server, sendAndExpectReqToServer;
 
 function createAndExpectSamplePlaylist(sample, toObject) {
-  const deferred = sendAndExpectReq('POST', '/playlist', { payload: sample })
+  const deferred = sendAndExpectReqToServer('POST', '/playlist', { payload: sample })
     .expect(({ body: { data }}) => {
       expect(data.id).toBeDefined();
       expect(data.name).toEqual(sample.name);
@@ -59,13 +45,14 @@ function createAndExpectSamplePlaylist(sample, toObject) {
 }
 
 function expectSamplePlaylistById(id, expectedStatus) {
-  return sendAndExpectReq('GET', `/playlist/${id}`, { expectedStatus });
+  return sendAndExpectReqToServer('GET', `/playlist/${id}`, { expectedStatus });
 }
 
 describe('Route /playlist', () => {
   beforeAll(async () => {
     await db.connect();
     server = await connect();
+    sendAndExpectReqToServer = sendAndExpectReq(server);
   });
 
   beforeEach(async () => {
@@ -86,7 +73,7 @@ describe('Route /playlist', () => {
     const playlist1 = await createAndExpectSamplePlaylist(samplePlaylists[0], true)
         , playlist2 = await createAndExpectSamplePlaylist(samplePlaylists[1], true);
 
-    await sendAndExpectReq('GET', '/playlist')
+    await sendAndExpectReqToServer('GET', '/playlist')
       .expect(({ body: { data }}) => {
         expect(data instanceof Array).toBeTruthy();
         expect(data.length).toEqual(2);
@@ -100,7 +87,13 @@ describe('Route /playlist', () => {
 
     await createAndExpectSamplePlaylist(samplePlaylists[1]);
     await expectSamplePlaylistById(playlist.id)
-      .expect({ data: playlist });
+      .expect(({ body: { data: { items }}}) => {
+        items.forEach(({ id, name, url }, index) => {
+          expect(id).toBeDefined();
+          expect(name).toEqual(playlist.items[index].name);
+          expect(url).toEqual(playlist.items[index].url);
+        });
+      });
   });
 
   test('It should update a playlist', async () => {
@@ -110,7 +103,7 @@ describe('Route /playlist', () => {
         , playlist1 = await createAndExpectSamplePlaylist(samplePlaylists[0], true)
         , playlist2 = await createAndExpectSamplePlaylist(samplePlaylists[1], true);
 
-    await sendAndExpectReq('PUT', `/playlist/${playlist1.id}`, { payload: playlistUpdate })
+    await sendAndExpectReqToServer('PUT', `/playlist/${playlist1.id}`, { payload: playlistUpdate })
       .expect(({ body: { data }}) => {
         expect(data.id).toEqual(playlist1.id);
         expect(data.name).toEqual(playlistUpdate.name);
@@ -129,7 +122,7 @@ describe('Route /playlist', () => {
     await expectSamplePlaylistById(playlist.id)
       .expect({ data: playlist });
 
-    await sendAndExpectReq('DELETE', `/playlist/${playlist.id}`)
+    await sendAndExpectReqToServer('DELETE', `/playlist/${playlist.id}`)
       .expect({ data: 1 });
 
     await expectSamplePlaylistById(playlist.id, 404);

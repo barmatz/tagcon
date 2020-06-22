@@ -1,5 +1,6 @@
 import express from 'express';
-import Playlist from '../db/models/playlist.js';
+import Playlist from '../db/models/Playlist.js';
+import Video from '../db/models/Video.js';
 
 export default express.Router()
   .get('/', async (req, res, next) => {
@@ -9,13 +10,28 @@ export default express.Router()
     next();
   })
   .post('/', async ({ body }, res, next) => {
-    const playlist = await Playlist.create(body);
+    const { items } = body
+        , doc = { ...body };
+
+    delete doc.items;
+
+    let playlist = await Playlist.create(doc);
+
+    if (items) {
+      await Promise.all(items.map(async item => {
+        const video = await Video.findOrCreate(item);
+
+        playlist.items.push(video.doc);
+      }));
+
+      playlist = await playlist.save();
+    }
 
     res.data = playlist.toClient();
     next();
   })
   .get('/:id', async ({ params: { id }}, res, next) => {
-    const playlist = await Playlist.findById(id);
+    const playlist = await Playlist.findById(id).populate('items');
 
     if (playlist) {
       res.data = playlist.toClient();

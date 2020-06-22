@@ -18,6 +18,10 @@ function removeObjectFields(object) {
       delete newObject.__v;
     }
 
+    if ('_bsontype' in newObject) {
+      delete newObject._bsontype;
+    }
+
     Object.keys(newObject).forEach(key => {
       newObject[key] = removeObjectFields(newObject[key]);
     });

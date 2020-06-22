@@ -6,7 +6,7 @@ export default {
   ],
   testEnvironment: 'node',
   testMatch: [
-    '**/tests/**/*.[jt]s?(x)',
+    '**/tests/**/?(*.)+(spec|test).[jt]s?(x)',
     '**/?(*.)+(spec|test).[tj]s?(x)'
   ]
 };

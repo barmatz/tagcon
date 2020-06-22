@@ -11,7 +11,7 @@ describe('DB Model Utils', () => {
   });
 
   test('It should return a deep formatted object', () => {
-    const object = { _id: 1, __v: 2, array: [{ _id: 1, __v: 2, string: 'bar' }], object: { _id: 1, foo: 'bar' }}
+    const object = { _id: 1, __v: 2, array: [{ _id: 1, __v: 2, _bsontype: 3, string: 'bar' }], object: { _id: 1, foo: 'bar' }}
         , expectedObject = { id: 1, array: [{ id: 1, string: 'bar' }], object: { id: 1, foo: 'bar' }}
         , formattedObject = toClient(object);
 
