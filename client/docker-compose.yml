@@ -1,0 +1,12 @@
+version: '3'
+services:
+  client:
+    container_name: tagcon_client_dev
+    build: .
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 80:80
+    volumes:
+      - ./:/client
+      - /client/node_modules

@@ -27,8 +27,8 @@
     "build:storybook": "build-storybook -s public",
     "storybook": "start-storybook -p 9009 -s public",
     "container": "run-s container:build container:start",
-    "container:build": "run-s lint test && docker build . -t tagcon-client-container",
-    "container:start": "docker run -p 3000:3000 tagcon-client-container",
+    "container:build": "docker-compose build",
+    "container:start": "docker-compose up",
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject"
   },
