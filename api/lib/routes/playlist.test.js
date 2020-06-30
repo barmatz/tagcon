@@ -26,7 +26,7 @@ const samplePlaylists = [{
 let server, sendAndExpectReqToServer;
 
 function createAndExpectSamplePlaylist(sample, toObject) {
-  const deferred = sendAndExpectReqToServer('POST', '/playlist', { payload: sample })
+  const deferred = sendAndExpectReqToServer('POST', '/api/playlist', { payload: sample })
     .expect(({ body: { data }}) => {
       expect(data.id).toBeDefined();
       expect(data.name).toEqual(sample.name);
@@ -45,7 +45,7 @@ function createAndExpectSamplePlaylist(sample, toObject) {
 }
 
 function expectSamplePlaylistById(id, expectedStatus) {
-  return sendAndExpectReqToServer('GET', `/playlist/${id}`, { expectedStatus });
+  return sendAndExpectReqToServer('GET', `/api/playlist/${id}`, { expectedStatus });
 }
 
 describe('Route /playlist', () => {
@@ -73,7 +73,7 @@ describe('Route /playlist', () => {
     const playlist1 = await createAndExpectSamplePlaylist(samplePlaylists[0], true)
         , playlist2 = await createAndExpectSamplePlaylist(samplePlaylists[1], true);
 
-    await sendAndExpectReqToServer('GET', '/playlist')
+    await sendAndExpectReqToServer('GET', '/api/playlist')
       .expect(({ body: { data }}) => {
         expect(data instanceof Array).toBeTruthy();
         expect(data.length).toEqual(2);
@@ -103,7 +103,7 @@ describe('Route /playlist', () => {
         , playlist1 = await createAndExpectSamplePlaylist(samplePlaylists[0], true)
         , playlist2 = await createAndExpectSamplePlaylist(samplePlaylists[1], true);
 
-    await sendAndExpectReqToServer('PUT', `/playlist/${playlist1.id}`, { payload: playlistUpdate })
+    await sendAndExpectReqToServer('PUT', `/api/playlist/${playlist1.id}`, { payload: playlistUpdate })
       .expect(({ body: { data }}) => {
         expect(data.id).toEqual(playlist1.id);
         expect(data.name).toEqual(playlistUpdate.name);
@@ -122,7 +122,7 @@ describe('Route /playlist', () => {
     await expectSamplePlaylistById(playlist.id)
       .expect({ data: playlist });
 
-    await sendAndExpectReqToServer('DELETE', `/playlist/${playlist.id}`)
+    await sendAndExpectReqToServer('DELETE', `/api/playlist/${playlist.id}`)
       .expect({ data: 1 });
 
     await expectSamplePlaylistById(playlist.id, 404);

@@ -15,7 +15,7 @@ describe('Route /', () => {
 
   test('It should response the GET method', async () => (
     req(server)
-      .get('/')
+      .get('/api')
       .expect('Content-Type', /json/)
       .expect(200, {
         data: {

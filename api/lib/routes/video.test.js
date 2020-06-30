@@ -40,7 +40,7 @@ const sampleVideos = [{
 let server, sendAndExpectReqToServer;
 
 function createAndExpectSampleVideo(sample, toObject) {
-  const deferred = sendAndExpectReqToServer('POST', '/video', { payload: sample })
+  const deferred = sendAndExpectReqToServer('POST', '/api/video', { payload: sample })
     .expect(({ body: { data }}) => {
       expect(data.id).toBeDefined();
       expect(data.url).toEqual(sample.url);
@@ -59,7 +59,7 @@ function createAndExpectSampleVideo(sample, toObject) {
 }
 
 function expectSampleVideoById(id, expectedStatus) {
-  return sendAndExpectReqToServer('GET', `/video/${id}`, { expectedStatus });
+  return sendAndExpectReqToServer('GET', `/api/video/${id}`, { expectedStatus });
 }
 
 describe('Route /video', () => {
@@ -87,7 +87,7 @@ describe('Route /video', () => {
     const video1 = await createAndExpectSampleVideo(sampleVideos[0], true)
         , video2 = await createAndExpectSampleVideo(sampleVideos[1], true);
 
-    await sendAndExpectReqToServer('GET', '/video')
+    await sendAndExpectReqToServer('GET', '/api/video')
       .expect(({ body: { data }}) => {
         expect(data instanceof Array).toBeTruthy();
         expect(data.length).toEqual(2);
@@ -111,7 +111,7 @@ describe('Route /video', () => {
         , video1 = await createAndExpectSampleVideo(sampleVideos[0], true)
         , video2 = await createAndExpectSampleVideo(sampleVideos[1], true);
 
-    await sendAndExpectReqToServer('PUT', `/video/${video1.id}`, { payload: videoUpdate })
+    await sendAndExpectReqToServer('PUT', `/api/video/${video1.id}`, { payload: videoUpdate })
       .expect(({ body: { data }}) => {
         expect(data.id).toEqual(video1.id);
         expect(data.name).toEqual(videoUpdate.name);
@@ -130,7 +130,7 @@ describe('Route /video', () => {
     await expectSampleVideoById(video.id)
       .expect({ data: video });
 
-    await sendAndExpectReqToServer('DELETE', `/video/${video.id}`)
+    await sendAndExpectReqToServer('DELETE', `/api/video/${video.id}`)
       .expect({ data: 1 });
 
     await expectSampleVideoById(video.id, 404);
