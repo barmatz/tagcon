@@ -11,7 +11,7 @@ function getLogger() {
     case 'production':
       return logger('common');
     case 'test':
-      // return (req, res, next) => next();
+      return (req, res, next) => next();
     default:
       return logger('dev');
   }
