@@ -27,7 +27,7 @@ export default express()
   .use(cors())
   .use(express.static(join('.', 'public')))
   .use('/ping', (req, res) => res.send('pong'))
-  .use('/', indexRouter)
+  .use('/api', indexRouter)
   .use((req, res, next) => next(createError(404)))
   .use((err, { app }, { locals, status, render }) => {
     locals.message = err.message;
