@@ -4,7 +4,32 @@ services:
     container_name: tagcon_api_dev
     build: .
     command: npx nodemon .
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
     volumes:
       - .:/api
+    depends_on:
+      - db
+    networks:
+      - tagcon_api_dev_network
+
+  db:
+    container_name: tagcon_api_test_db
+    image: mongo
+    restart: "no"
+    volumes:
+      - mongodata:/data/db
     ports:
-      - 9000:9000
+      - 27017:27017
+    command: mongod --noauth
+    networks:
+      - tagcon_api_dev_network
+
+networks:
+  tagcon_api_dev_network:
+      driver: bridge
+
+volumes:
+  mongodata:
