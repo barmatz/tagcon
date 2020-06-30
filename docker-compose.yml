@@ -32,13 +32,16 @@ services:
     container_name: tagcon_db_prod
     image: mongo
     volumes:
-      - ./data-node:/data/db
+      - mongodata:/data/db
     ports:
       - 27017:27017
     command: mongod --noauth
     networks:
       - tagcon_network
 
+volumes:
+  mongodata:
+    
 networks:
   tagcon_network:
       driver: bridge

@@ -1,15 +1,15 @@
-import { Schema, ObjectId, model } from 'mongoose';
+import mongoose from 'mongoose';
 import { toClient } from './utils.js';
 import Video from './Video.js';
 
-const schema = Schema({
+const schema = mongoose.Schema({
   name: String,
   items: [{
-    type: ObjectId,
+    type: mongoose.ObjectId,
     ref: Video.modelName
   }]
 });
 
 schema.method('toClient', toClient);
 
-export default model('Playlist', schema);
+export default mongoose.model('Playlist', schema);

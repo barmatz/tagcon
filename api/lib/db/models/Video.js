@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 import findOrCreate from 'mongoose-findorcreate';
 import { toClient } from './utils.js';
 
-const schema = Schema({
+const schema = mongoose.Schema({
   name: String,
   url: String,
   tags: [{
@@ -17,4 +17,4 @@ const schema = Schema({
 schema.plugin(findOrCreate);
 schema.method('toClient', toClient);
 
-export default model('Video', schema);
+export default mongoose.model('Video', schema);
