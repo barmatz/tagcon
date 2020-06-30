@@ -2,11 +2,11 @@
   background: #f00;
   border-radius: 0.5rem;
   cursor: pointer;
+  display: inline-block;
   font-size: 0.8rem;
   height: fit-content;
   padding: 0.5rem;
   position: relative;
-  display: inline-block;
 
   &__tooltip {
     background: #000;
