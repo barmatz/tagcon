@@ -3,6 +3,8 @@ services:
   client:
     container_name: tagcon_client_prod
     build: ./client
+    environment:
+      - NODE_ENV=production
     ports:
       - 80:80
     volumes:
@@ -17,6 +19,7 @@ services:
     container_name: tagcon_api_prod
     build: ./api
     environment:
+      - NODE_ENV=production
       - PORT=9000
     ports:
       - 9000:9000
@@ -41,7 +44,7 @@ services:
 
 volumes:
   mongodata:
-    
+
 networks:
   tagcon_network:
       driver: bridge
