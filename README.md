@@ -18,6 +18,14 @@ Access the `/client` directory to read more about the client.
 
 In the project directory, you can run:
 
+### Build 
+
+To build the project run 
+
+`docker-compose build`
+
+This command must be executed before running the project.
+
 ### Run
 
 To start the project run 

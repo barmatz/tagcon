@@ -1,8 +1,8 @@
 version: '3'
 services:
   client:
+    container_name: tagcon_client_prod
     build: ./client
-    restart: "no"
     ports:
       - 80:80
     volumes:
@@ -11,11 +11,11 @@ services:
     links:
       - api
     networks:
-      - tagconnetwork
+      - tagcon_network
 
   api:
+    container_name: tagcon_api_prod
     build: ./api
-    restart: "no"
     environment:
       - PORT=9000
     ports:
@@ -26,20 +26,19 @@ services:
     depends_on:
       - db
     networks:
-      - tagconnetwork
+      - tagcon_network
 
   db:
+    container_name: tagcon_db_prod
     image: mongo
-    restart: "no"
-    container_name: mongodb
     volumes:
       - ./data-node:/data/db
     ports:
       - 27017:27017
     command: mongod --noauth
     networks:
-      - tagconnetwork
+      - tagcon_network
 
 networks:
-  tagconnetwork:
+  tagcon_network:
       driver: bridge

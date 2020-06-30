@@ -1,9 +1,10 @@
 version: '3'
 services:
   api:
-      build: .
-      command: npx nodemon .
-      volumes:
-        - .:/api
-      ports:
-        - 3000:3000
+    container_name: tagcon_api_dev
+    build: .
+    command: npx nodemon .
+    volumes:
+      - .:/api
+    ports:
+      - 9000:9000

@@ -1,6 +1,7 @@
 version: '3'
 services:
   api:
+    container_name: tagcon_api_test
     build: 
       context: .
       dockerfile: Dockerfile.test
@@ -17,6 +18,7 @@ services:
       - tagcontestnetwork
 
   db:
+    container_name: tagcon_api_test_db
     image: mongo
     restart: "no"
     volumes:
