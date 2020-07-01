@@ -1,7 +1,7 @@
 import express from 'express';
 import Video from '../../db/models/Video.js';
 
-export default express.Router()
+export default express.Router({ mergeParams: true })
   .get('/', async ({ params: { id }}, res, next) => {
     const video = await Video.findById(id, 'tags');
 
@@ -14,14 +14,14 @@ export default express.Router()
   .post('/', async ({ body, params: { id }}, res, next) => {
     const video = await Video.findById(id, 'tags');
 
-    console.log(body);
+    if (video) {
+      video.tags = body;
 
-    video.tags = body;
+      const updatedVideo = await video.save();
 
-    const updatedVideo = await video.save();
-
-    if (updatedVideo) {
-      res.data = updatedVideo.toClient();
+      if (updatedVideo) {
+        res.data = updatedVideo.toClient();
+      }
     }
 
     next();

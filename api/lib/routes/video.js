@@ -1,6 +1,6 @@
 import express from 'express';
 import Video from '../db/models/Video.js';
-// import tags from './video/tags.js';
+import tags from './video/tags.js';
 
 export default express.Router()
   .get('/', async (req, res, next) => {
@@ -43,5 +43,5 @@ export default express.Router()
     res.data = deletedCount;
 
     next();
-  });
-// .all('/:id/tags', tags);
+  })
+  .use('/:id/tags', tags);

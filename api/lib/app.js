@@ -30,8 +30,8 @@ export default express()
   .use('/api', indexRouter)
   .use((req, res, next) => next(createError(404)))
   .use((err, { app }, { locals, status, render }) => {
-    locals.message = err.message;
-    locals.error = app.get('env') === 'development' ? err : {};
+    locals.message = err.message; // eslint-disable-line no-param-reassign
+    locals.error = app.get('env') === 'development' ? err : {}; // eslint-disable-line no-param-reassign
     status(err.status || 500);
     render('error');
   });
